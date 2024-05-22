@@ -1,10 +1,25 @@
-
 ============
 Calculations
 ============
 
-The interpreter acts as a simple calculator: you can type an expression at it and it will write the value. Expression syntax is straightforward: the operators +, -, * and / can be used to perform arithmetic; parentheses (()) can be used for grouping. For example::
 
-  2 + 2
+.. py-config::
 
+    splashscreen:
+        autoclose: true
+    packages:
+    - matplotlib
 
+.. py-repl::
+    :output: replOutput
+
+    print("hallo world")
+    import matplotlib.pyplot as plt
+    plt.plot([1, 2, 3])
+    plt.gcf()
+
+.. raw:: html
+
+    <div id="replOutput"></div>
+
+.. py-terminal::
