@@ -1,0 +1,62 @@
+
+# Simple workflow for deploying static content to GitHub Pages
+# Cribbed from https://github.com/combatdolls/combatdolls.space/blob/trunk/.github/workflows/deploy.yml
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Sphinx Build
+        uses: learn-python/sphinx-action@latest
+        with:
+          pre-build-command: "pip install pipenv && pipenv install --deploy"
+          docs-folder: "."
+      - name: Upload Build
+        uses: actions/upload-artifact@master
+        with:
+          name: site-build
+          path: build
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    # Allow one concurrent deployment
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: site-build
+          path: build
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'build/html'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
