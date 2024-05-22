@@ -10,6 +10,8 @@ Welcome to Learn Python with d8ndl's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   tutorial/calculations
+
 
 
 Indices and tables
