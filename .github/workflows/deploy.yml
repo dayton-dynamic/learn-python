@@ -25,9 +25,9 @@ jobs:
         with:
           lfs: true
       - name: Sphinx Build
-        uses: learn-python/sphinx-action@latest
+        uses: ammaraskar/sphinx-action@master
         with:
-          pre-build-command: "pip install pipenv && pipenv install --deploy"
+          # pre-build-command: "pip install pipenv && pipenv install --deploy"
           docs-folder: "."
       - name: Upload Build
         uses: actions/upload-artifact@master
